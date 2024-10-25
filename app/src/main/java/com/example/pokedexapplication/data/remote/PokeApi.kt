@@ -8,8 +8,6 @@ import retrofit2.http.Query
 
 interface PokeApi {
 
-    //https://pokeapi.co/api/v2/
-
     @GET("pokemon")
     suspend fun getPokemonList(
         @Query("limit") limit: Int,

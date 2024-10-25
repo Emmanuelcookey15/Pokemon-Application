@@ -5,6 +5,14 @@ plugins {
     alias(libs.plugins.org.jetbrains.kotlin.kapt)
 }
 
+object BaseUrl {
+    val production = "https://pokeapi.co/api/v2/"
+    val staging = "/https://pokeapi.co/api/v2/"
+    fun surroundWithInvertedCommas(value: Any?): String {
+        return "\"$value\""
+    }
+}
+
 android {
     namespace = "com.example.pokedexapplication"
     compileSdk = 34
@@ -22,12 +30,29 @@ android {
         }
     }
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
+            )
+            buildConfigField(
+                "String",
+                "BASE_URL",
+                BaseUrl.surroundWithInvertedCommas(BaseUrl.production)
+            )
+        }
+
+        debug {
+            buildConfigField(
+                "String",
+                "BASE_URL",
+                BaseUrl.surroundWithInvertedCommas(BaseUrl.staging)
             )
         }
     }
