@@ -4,7 +4,7 @@ import com.example.pokedexapplication.data.remote.PokeApi
 import com.example.pokedexapplication.data.remote.responses.Pokemon
 import com.example.pokedexapplication.data.remote.responses.PokemonList
 import com.example.pokedexapplication.domain.repo.IPokemonRepository
-import com.example.pokedexapplication.reusable_data.utils.Resource
+import com.example.pokedexapplication.common.utils.Resource
 import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
 

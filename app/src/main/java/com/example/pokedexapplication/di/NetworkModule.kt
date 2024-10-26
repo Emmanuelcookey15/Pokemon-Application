@@ -3,7 +3,6 @@ package com.example.pokedexapplication.di
 import com.example.pokedexapplication.BuildConfig
 import com.example.pokedexapplication.data.remote.PokeApi
 import com.example.pokedexapplication.data.repository.PokemonRepositoryImpl
-import com.example.pokedexapplication.domain.repo.IPokemonRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,7 +13,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AppModule {
+object NetworkModule {
 
 
     @Singleton

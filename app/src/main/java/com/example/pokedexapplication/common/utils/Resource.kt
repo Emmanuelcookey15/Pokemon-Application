@@ -1,7 +1,4 @@
-package com.example.pokedexapplication.reusable_data.utils
-
-import androidx.core.app.NotificationCompat.MessagingStyle.Message
-import java.lang.Error
+package com.example.pokedexapplication.common.utils
 
 sealed class Resource<T>(val data: T? = null, val message: String? = null) {
 
