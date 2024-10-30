@@ -1,7 +1,0 @@
-package com.example.pokedexapplication.data.remote.responses
-
-data class GenerationIv(
-    val diamond-pearl: DiamondPearl,
-    val heartgold-soulsilver: HeartgoldSoulsilver,
-    val platinum: Platinum
-)
