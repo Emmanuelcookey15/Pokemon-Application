@@ -1,6 +1,6 @@
 package com.example.data.remote.responses
 
-data class Pokemon(
+data class PokemonResponse(
     val abilities: List<Ability>,
     val base_experience: Int,
     val cries: Cries,
