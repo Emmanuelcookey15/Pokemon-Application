@@ -13,7 +13,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import com.example.pokedexapplication.presentation.pokemon_list.PokemonListScreen
+import com.example.presentation.ui.pokemon_list.PokemonListScreen
 import kotlinx.serialization.Serializable
 
 @Composable

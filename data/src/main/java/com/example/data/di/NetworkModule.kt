@@ -1,4 +1,4 @@
-package com.example.data.design_pattern.di
+package com.example.data.di
 
 import com.example.data.BuildConfig
 import com.example.data.remote.PokeApi

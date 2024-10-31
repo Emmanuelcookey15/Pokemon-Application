@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.org.jetbrains.kotlin.kapt)
@@ -7,20 +7,18 @@ plugins {
 }
 
 android {
-    namespace = "com.example.pokedexapplication"
+    namespace = "com.example.presentation"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.pokedexapplication"
         minSdk = 24
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
+        consumerProguardFiles("consumer-rules.pro")
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     buildTypes {
@@ -36,28 +34,23 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
+    
     buildFeatures {
         compose = true
-        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
     }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 }
 
 dependencies {
 
-    implementation(project(":data"))
     implementation(project(":domain"))
-    implementation(project(":presentation"))
+    implementation(project(":common"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -68,6 +61,10 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
+
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -87,6 +84,9 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx.v231)
 
+    // Coil
+    implementation(libs.coil)
+    implementation(libs.accompanist.coil)
 
     //Dagger - Hilt
     implementation(libs.hilt.android)
@@ -94,8 +94,10 @@ dependencies {
     kapt(libs.androidx.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
+    implementation(libs.palette.v7)
 
     //Serialization
     implementation(libs.kotlinx.serialization.json)
+
 
 }
