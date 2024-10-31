@@ -13,6 +13,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
+import com.example.presentation.ui.pokemon_list.PokemonListScreen
 import kotlinx.serialization.Serializable
 
 @Composable
@@ -25,20 +26,7 @@ fun AppNavHost(
         startDestination = startDestination,
     ){
         composable<ScreenA> {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Button(onClick = {
-                    navController.navigate(ScreenB(
-                        pokemonName = "",
-                        dominantColor = 0xFFBAC7FF
-                    ))
-                }) {
-                    Text(text = "Go to screen B")
-                }
-            }
+            PokemonListScreen(navController = navController)
         }
         composable<ScreenB> {
             val args = it.toRoute<ScreenB>()

@@ -3,14 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.org.jetbrains.kotlin.kapt)
-}
-
-object BaseUrl {
-    val production = "https://pokeapi.co/api/v2/"
-    val staging = "/https://pokeapi.co/api/v2/"
-    fun surroundWithInvertedCommas(value: Any?): String {
-        return "\"$value\""
-    }
+    alias(libs.plugins.hilt.android)
 }
 
 android {
@@ -30,29 +23,12 @@ android {
         }
     }
 
-    buildFeatures {
-        buildConfig = true
-    }
-
     buildTypes {
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
-            )
-            buildConfigField(
-                "String",
-                "BASE_URL",
-                BaseUrl.surroundWithInvertedCommas(BaseUrl.production)
-            )
-        }
-
-        debug {
-            buildConfigField(
-                "String",
-                "BASE_URL",
-                BaseUrl.surroundWithInvertedCommas(BaseUrl.staging)
             )
         }
     }
@@ -65,6 +41,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -77,6 +54,10 @@ android {
 }
 
 dependencies {
+
+    implementation(project(":data"))
+    implementation(project(":domain"))
+    implementation(project(":presentation"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -95,12 +76,6 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    // Retrofit
-    implementation(libs.retrofit)
-    implementation(libs.converter.gson)
-    implementation(libs.okhttp)
-    implementation(libs.logging.interceptor)
-
     // Timber
     implementation(libs.timber)
 
@@ -112,19 +87,13 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx.v231)
 
-    // Coil
-    implementation(libs.coil)
-    implementation(libs.accompanist.coil)
 
     //Dagger - Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
-    implementation(libs.androidx.hilt.lifecycle.viewmodel)
     kapt(libs.androidx.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
-
-    implementation(libs.palette.v7)
 
     //Serialization
     implementation(libs.kotlinx.serialization.json)
