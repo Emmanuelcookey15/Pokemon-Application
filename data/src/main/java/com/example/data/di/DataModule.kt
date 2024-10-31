@@ -1,6 +1,7 @@
 package com.example.data.di
 
 import com.example.data.BuildConfig
+import com.example.data.mapper.PokemonRepositoryMapper
 import com.example.data.remote.PokeApi
 import com.example.data.repository.PokemonRepositoryImpl
 import dagger.Module
@@ -13,13 +14,13 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object NetworkModule {
+object DataModule {
 
 
     @Singleton
     @Provides
     fun providePokemonRepository(
-        api: PokeApi
+        api: PokeApi,
     ) = PokemonRepositoryImpl(api)
 
 

@@ -9,7 +9,7 @@ interface IPokemonRepository {
     suspend fun getPokemonList(
        limit: Int,
        offset: Int,
-    ): Resource<PokemonListEntity>
+    ): Resource<List<PokemonListEntity>>
 
     suspend fun getPokemonInfo(
        pokemonName: String
