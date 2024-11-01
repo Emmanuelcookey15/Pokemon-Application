@@ -14,8 +14,8 @@ object PokemonRepositoryMapper {
     fun mapFromPokemonListResponse(type: PokemonListResponse): List<PokemonListEntity> {
         return type.results.map {
             PokemonListEntity(
-                it.name,
-                it.url
+                pokemonName = it.name,
+                imageUrl = it.url
             )
         }
     }
