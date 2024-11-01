@@ -8,8 +8,10 @@ import com.example.data.remote.PokeApi
 import com.example.domain.entities.PokemonEntity
 import com.example.domain.entities.PokemonListEntity
 import com.example.domain.repo.IPokemonRepository
+import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
 
+@ActivityScoped
 class PokemonRepositoryImpl @Inject constructor(
     private val api: PokeApi,
 ): IPokemonRepository {
