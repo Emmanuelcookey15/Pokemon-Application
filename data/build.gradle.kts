@@ -8,7 +8,7 @@ plugins {
 
 object BaseUrl {
     val production = "https://pokeapi.co/api/v2/"
-    val staging = "/https://pokeapi.co/api/v2/"
+    val staging = "https://pokeapi.co/api/v2/"
     fun surroundWithInvertedCommas(value: Any?): String {
         return "\"$value\""
     }

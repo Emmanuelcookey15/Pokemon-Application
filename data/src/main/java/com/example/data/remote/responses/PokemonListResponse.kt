@@ -1,8 +1,8 @@
 package com.example.data.remote.responses
 
 data class PokemonListResponse(
-    val count: Int,
-    val next: String,
-    val previous: Any,
+    val count: Int = 0,
+    val next: String? = "",
+    val previous: String? = "",
     val results: List<Result>
 )

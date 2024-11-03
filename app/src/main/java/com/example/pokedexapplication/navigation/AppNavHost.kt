@@ -13,6 +13,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
+import com.example.presentation.navigation.ScreenA
+import com.example.presentation.navigation.ScreenB
 import com.example.presentation.ui.pokemon_list.PokemonListScreen
 import kotlinx.serialization.Serializable
 
@@ -43,12 +45,3 @@ fun AppNavHost(
         }
     }
 }
-
-@Serializable
-object ScreenA
-
-@Serializable
-data class ScreenB(
-    val pokemonName: String,
-    val dominantColor: Long?
-)

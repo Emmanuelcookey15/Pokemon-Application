@@ -1,4 +1,4 @@
-package com.example.presentation.di
+package com.example.pokedexapplication.design_pattern.di
 
 import com.example.domain.repo.IPokemonRepository
 import com.example.domain.usecase.PokemonUseCase
@@ -11,7 +11,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object PresentationModule {
+object AppModule {
 
     @Provides
     fun providePokemonListViewModel(
