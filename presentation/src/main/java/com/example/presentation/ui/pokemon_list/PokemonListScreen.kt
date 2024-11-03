@@ -135,7 +135,7 @@ fun SearchBar(
                 .padding(horizontal = 20.dp, vertical = 12.dp)
                 .onFocusChanged {
                     //to hide the hint when type
-                    isHintDisplayed = !it.isFocused && text.isNotEmpty()
+                    isHintDisplayed = !it.isFocused && text.isEmpty()
                 }
         )
 

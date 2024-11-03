@@ -15,6 +15,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.example.presentation.navigation.ScreenA
 import com.example.presentation.navigation.ScreenB
+import com.example.presentation.ui.pokemon_details.PokemonDetailScreen
 import com.example.presentation.ui.pokemon_list.PokemonListScreen
 import kotlinx.serialization.Serializable
 
@@ -34,13 +35,12 @@ fun AppNavHost(
             val args = it.toRoute<ScreenB>()
             val color = args.dominantColor?.let { color -> Color(color) } ?:  Color.White
             val pokemonName = args.pokemonName
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(text = "${pokemonName}, ${color} years old")
-            }
+            PokemonDetailScreen(
+                color,
+                pokemonName,
+                navController
+            )
+
 
         }
     }

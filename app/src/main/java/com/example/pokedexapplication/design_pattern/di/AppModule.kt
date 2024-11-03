@@ -13,15 +13,10 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-    @Provides
-    fun providePokemonListViewModel(
-        pokemonUseCase: PokemonUseCase
-    ) = PokemonListViewModel(pokemonUseCase)
-
-
     @Singleton
     @Provides
     fun providePokemonUseCase(
         repository: IPokemonRepository
     ) = PokemonUseCase(repository)
+
 }

@@ -9,6 +9,7 @@ data class PokemonEntity(
     val weight: Int,
     val height: Int,
     val cries: CriesEntity,
+    val sprites: SpritesEntity,
     val stats: List<StatEntity>,
     val types: List<TypeEntity>,
 )

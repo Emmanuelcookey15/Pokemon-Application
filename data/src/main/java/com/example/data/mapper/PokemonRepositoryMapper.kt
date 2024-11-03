@@ -8,6 +8,7 @@ import com.example.domain.entities.CriesEntity
 import com.example.domain.entities.PokemonEntity
 import com.example.domain.entities.PokemonDataEntity
 import com.example.domain.entities.PokemonListEntity
+import com.example.domain.entities.SpritesEntity
 import com.example.domain.entities.StatEntity
 import com.example.domain.entities.TypeEntity
 import com.google.gson.JsonParser
@@ -53,16 +54,26 @@ object PokemonRepositoryMapper {
                 stats = it.stats.map { st ->
                     StatEntity(
                         baseStat = st.base_stat,
-                        effort = st.effort
+                        effort = st.effort,
+                        name = st.stat.name,
+                        url = st.stat.url
                     )
                 },
                 cries = CriesEntity(
                     latest = it.cries.latest,
                     legacy = it.cries.legacy
                 ),
+                sprites = SpritesEntity(
+                    backDefault = it.sprites.back_default,
+                    backShiny = it.sprites.back_shiny,
+                    frontDefault = it.sprites.front_default,
+                    frontShiny = it.sprites.front_shiny,
+                ),
                 types = it.types.map { type ->
                     TypeEntity(
-                        slot = type.slot
+                        slot = type.slot,
+                        name = type.type.name,
+                        url = type.type.url
                     )
                 },
             )
