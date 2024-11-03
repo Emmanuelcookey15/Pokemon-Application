@@ -1,17 +1,19 @@
 package com.example.domain.repo
 
 import com.example.domain.entities.PokemonEntity
+import com.example.domain.entities.PokemonDataEntity
 import com.example.domain.entities.PokemonListEntity
 import com.example.domain.utils.Resource
+import kotlinx.coroutines.flow.Flow
 
 interface IPokemonRepository {
 
     suspend fun getPokemonList(
        limit: Int,
        offset: Int,
-    ): Resource<List<PokemonListEntity>>
+    ): Flow<Resource<PokemonListEntity>>
 
     suspend fun getPokemonInfo(
        pokemonName: String
-    ): Resource<PokemonEntity>
+    ): Flow<Resource<PokemonEntity>>
 }

@@ -1,5 +1,7 @@
 package com.example.domain.entities
 
 data class TypeEntity(
-    val slot: Int = 0,
+    val slot: Int,
+    val name: String,
+    val url: String
 )

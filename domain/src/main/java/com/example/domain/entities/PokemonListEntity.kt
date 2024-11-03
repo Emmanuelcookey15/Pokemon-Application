@@ -1,6 +1,7 @@
 package com.example.domain.entities
 
 data class PokemonListEntity(
-    val name: String = "",
-    val url: String = "",
+    val count: Int,
+    val next: String,
+    val pokemonEntities: List<PokemonDataEntity>
 )

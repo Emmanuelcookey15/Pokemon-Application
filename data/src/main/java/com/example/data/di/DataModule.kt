@@ -4,10 +4,13 @@ import com.example.data.BuildConfig
 import com.example.data.mapper.PokemonRepositoryMapper
 import com.example.data.remote.PokeApi
 import com.example.data.repository.PokemonRepositoryImpl
+import com.example.data.utils.NetworkBoundResource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -21,14 +24,24 @@ object DataModule {
     @Provides
     fun providePokemonRepository(
         api: PokeApi,
-    ) = PokemonRepositoryImpl(api)
+        networkBoundResource: NetworkBoundResource
+    ) = PokemonRepositoryImpl(api, networkBoundResource)
 
 
     @Singleton
     @Provides
     fun providePokeApi(): PokeApi {
+
+        val interceptor : HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+        val client : OkHttpClient = OkHttpClient.Builder().apply {
+            addInterceptor(interceptor)
+        }.build()
+
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
+            .client(client)
             .baseUrl(BuildConfig.BASE_URL)
             .build()
             .create(PokeApi::class.java)
