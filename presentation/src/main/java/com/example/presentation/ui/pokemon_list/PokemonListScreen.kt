@@ -1,6 +1,5 @@
 package com.example.presentation.ui.pokemon_list
 
-import android.graphics.drawable.Drawable
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -8,7 +7,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,8 +14,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
@@ -44,7 +40,6 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -52,25 +47,18 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import coil3.compose.AsyncImage
 import coil3.compose.SubcomposeAsyncImage
 import coil3.request.ImageRequest
 import coil3.request.allowHardware
-import coil3.request.crossfade
 import com.example.domain.entities.PokemonDataEntity
-import com.example.domain.entities.PokemonListEntity
 import com.example.presentation.R
-import com.example.presentation.navigation.ScreenB
+import com.example.presentation.routes.ScreenB
 import com.example.presentation.theme.RobotoCondensed
 
 @Composable
 fun PokemonListScreen(
-    navController: NavHostController,
+    onNavigateClick: (String, Int?) -> Unit,
     viewModel: PokemonListViewModel = hiltViewModel()
 ) {
 
@@ -97,7 +85,7 @@ fun PokemonListScreen(
                 viewModel.searchPokemonList(it)
             }
             Spacer(modifier = Modifier.height(16.dp))
-            PokemonList(navController = navController)
+            PokemonList(onNavigateClick = onNavigateClick)
         }
     }
 }
@@ -153,7 +141,7 @@ fun SearchBar(
 
 @Composable
 fun PokemonList(
-    navController: NavHostController,
+    onNavigateClick: (String, Int?) -> Unit,
     viewModel: PokemonListViewModel = hiltViewModel()
 ) {
     val pokemonList by remember { viewModel.pokemonList }
@@ -175,7 +163,7 @@ fun PokemonList(
             }
             PokedexEntity(
                 entity = pokemonList[itemIndex],
-                navController = navController,
+                onNavigateClick = onNavigateClick,
             )
         }
     }
@@ -199,7 +187,7 @@ fun PokemonList(
 @Composable
 fun PokedexEntity(
     entity: PokemonDataEntity,
-    navController: NavHostController,
+    onNavigateClick: (String, Int?) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: PokemonListViewModel = hiltViewModel<PokemonListViewModel>()
 ) {
@@ -223,9 +211,7 @@ fun PokedexEntity(
                 )
             )
             .clickable {
-                navController.navigate(
-                    ScreenB(entity.pokemonName, dominantColor.toArgb(),)
-                )
+                onNavigateClick.invoke(entity.pokemonName, dominantColor.toArgb())
             },
         contentAlignment = Alignment.Center
     ) {

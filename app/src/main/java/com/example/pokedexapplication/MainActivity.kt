@@ -7,7 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.navigation.compose.rememberNavController
 import com.example.pokedexapplication.navigation.AppNavHost
 import com.example.pokedexapplication.ui.theme.PokedexApplicationTheme
-import com.example.presentation.navigation.ScreenA
+import com.example.presentation.routes.ScreenA
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

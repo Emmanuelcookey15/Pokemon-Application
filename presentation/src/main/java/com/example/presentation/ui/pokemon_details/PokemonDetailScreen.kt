@@ -17,6 +17,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -68,7 +70,7 @@ import kotlin.math.round
 fun PokemonDetailScreen(
     dominantColor: Color,
     pokemonName: String,
-    navController: NavHostController,
+    onBackPressed: () -> Unit,
     topPadding: Dp = 20.dp,
     pokemonImageSize: Dp = 200.dp,
     viewModel: PokemonDetailViewModel = hiltViewModel(),
@@ -84,7 +86,7 @@ fun PokemonDetailScreen(
         .padding(bottom = 16.dp)
     ) {
         PokemonDetailTopSection(
-            navController = navController,
+            onBackPressed = onBackPressed,
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(0.2f)
@@ -136,7 +138,7 @@ fun PokemonDetailScreen(
 
 @Composable
 fun PokemonDetailTopSection(
-    navController: NavHostController,
+    onBackPressed: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -159,7 +161,7 @@ fun PokemonDetailTopSection(
                 .size(36.dp)
                 .offset(16.dp, 16.dp)
                 .clickable {
-                    navController.popBackStack()
+                    onBackPressed.invoke()
                 }
         )
     }
@@ -227,27 +229,57 @@ fun PokemonDetailSection(
 
 
 @Composable
-fun PokemonTypeSection(types: List<TypeEntity>) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .padding(16.dp)
-    ) {
-        for(type in types) {
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(horizontal = 8.dp)
-                    .clip(CircleShape)
-                    .background(parseTypeToColor(type))
-                    .height(35.dp)
-            ) {
-                Text(
-                    text = type.name.capitalize(Locale.ROOT),
-                    color = Color.White,
-                    fontSize = 18.sp
-                )
+fun PokemonTypeSection(
+    types: List<TypeEntity>,
+    useLazyRow: Boolean = true
+) {
+
+    if (useLazyRow) {
+        LazyRow(
+            horizontalArrangement = Arrangement.Start,
+            modifier = Modifier
+                .padding(16.dp)
+        ) {
+            items(types.size) {
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
+                        .padding(horizontal = 8.dp)
+                        .clip(CircleShape)
+                        .background(parseTypeToColor(types[it]))
+                        .height(35.dp)
+                        .width(130.dp)
+                ) {
+                    Text(
+                        text = types[it].name.capitalize(Locale.ROOT),
+                        color = Color.White,
+                        fontSize = 18.sp
+                    )
+                }
+            }
+        }
+    } else {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .padding(16.dp)
+        ) {
+            for (type in types) {
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(horizontal = 8.dp)
+                        .clip(CircleShape)
+                        .background(parseTypeToColor(type))
+                        .height(35.dp)
+                ) {
+                    Text(
+                        text = type.name.capitalize(Locale.ROOT),
+                        color = Color.White,
+                        fontSize = 18.sp
+                    )
+                }
             }
         }
     }
