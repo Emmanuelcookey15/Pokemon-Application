@@ -4,6 +4,7 @@ import com.example.data.BuildConfig
 import com.example.data.mapper.PokemonRepositoryMapper
 import com.example.data.remote.PokeApi
 import com.example.data.repository.PokemonRepositoryImpl
+import com.example.data.utils.NetworkBoundResource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,7 +24,8 @@ object DataModule {
     @Provides
     fun providePokemonRepository(
         api: PokeApi,
-    ) = PokemonRepositoryImpl(api)
+        networkBoundResource: NetworkBoundResource
+    ) = PokemonRepositoryImpl(api, networkBoundResource)
 
 
     @Singleton

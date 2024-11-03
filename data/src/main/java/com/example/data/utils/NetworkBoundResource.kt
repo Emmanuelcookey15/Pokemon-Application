@@ -5,30 +5,31 @@ import com.example.data.mapper.PokemonRepositoryMapper.parserErrorBody
 import com.example.domain.utils.Resource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 import retrofit2.Response
-import timber.log.Timber
 import javax.inject.Inject
 
 class NetworkBoundResource @Inject constructor(){
 
     private  val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 
-    suspend fun<ResultType> downloadData(api : suspend () -> Response<ResultType>): Resource<ResultType> {
+    suspend fun <RequestType, ResultType> triggerCall(apiCall: Response<RequestType>, mapper: (RequestType) -> ResultType): Flow<Resource<ResultType>> {
         return withContext(ioDispatcher) {
-            try {
-                val response: Response<ResultType> = api()
+            flow {
+                val response: Response<RequestType> = apiCall
                 if (response.isSuccessful){
                     response.body()?.let {
-                        Resource.Success(data = it)
-                    }?: Resource.Error(message = "Unknown error occurred")
+                        emit(Resource.Success(data = mapper(it)))
+                    }?: emit(Resource.Error(message = "Unknown error occurred"))
                 }else{
-                    Resource.Error(message = parserErrorBody(response.errorBody()))
+                    emit(Resource.Error(message = parserErrorBody(response.errorBody())))
                 }
 
-            } catch(error: Exception) {
-                Timber.e(error.localizedMessage)
-                Resource.Error(message = message(error))
+            }.catch { error ->
+                emit(Resource.Error(message = message(error)))
             }
         }
     }

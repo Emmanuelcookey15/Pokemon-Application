@@ -70,7 +70,8 @@ import com.example.presentation.theme.RobotoCondensed
 
 @Composable
 fun PokemonListScreen(
-    navController: NavHostController
+    navController: NavHostController,
+    viewModel: PokemonListViewModel = hiltViewModel()
 ) {
 
     Surface(
@@ -92,7 +93,9 @@ fun PokemonListScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
-            )
+            ) {
+                viewModel.searchPokemonList(it)
+            }
             Spacer(modifier = Modifier.height(16.dp))
             PokemonList(navController = navController)
         }
@@ -103,7 +106,7 @@ fun PokemonListScreen(
 fun SearchBar(
     modifier: Modifier = Modifier,
     hint: String = "",
-    onSearch: (String) -> Unit = {}
+    onSearch: (String) -> Unit = {},
 ){
     var text by remember {
         mutableStateOf("")
@@ -132,7 +135,7 @@ fun SearchBar(
                 .padding(horizontal = 20.dp, vertical = 12.dp)
                 .onFocusChanged {
                     //to hide the hint when type
-                    isHintDisplayed = !it.isFocused
+                    isHintDisplayed = !it.isFocused && text.isNotEmpty()
                 }
         )
 
@@ -157,6 +160,7 @@ fun PokemonList(
     val loadError by remember { viewModel.loadError }
     val isLoading by remember { viewModel.isLoading }
     val endReached by remember { viewModel.endReached }
+    val isSearching by remember { viewModel.isSearching }
 
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
@@ -166,7 +170,7 @@ fun PokemonList(
     ) {
         val itemCount = pokemonList.size
         items(itemCount) { itemIndex ->
-            if (itemIndex >= itemCount - 1 && !endReached){
+            if (itemIndex >= itemCount - 1 && !endReached && !isLoading && !isSearching){
                 viewModel.loadPokemonPaginated()
             }
             PokedexEntity(
